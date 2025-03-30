@@ -1,6 +1,6 @@
 # Text-to-Image Generator
 
-Yo project ek **Text-to-Image Generator** ho jun **FastAPI** (Python) backend ra **Next.js** (React) frontend ko sath banayeko cha. Yo **Hugging Face Inference API** ko upyog garera text prompts bata image generate garcha. Generated image haru ra tyo sanga sambandhit prompts ra image URLs **Prisma ORM** ra **PostgreSQL** ko madat le store garincha.
+Yo project ek **Text-to-Image Generator** ho jun **FastAPI** (Python) backend ra **Next.js** (React) frontend ko sath banayeko cha. Yo **Hugging Face Inference API** ko upyog garera text prompts bata image generate garcha. Generated image haru **Cloudinary** ma upload garincha ra URL frontend ma direct path garera display garincha. Data management ko lagi **Prisma ORM** ra **PostgreSQL** ko upyog garincha, jaha generated image URLs ra prompts store garincha.
 
 ## Steps to Build:
 
