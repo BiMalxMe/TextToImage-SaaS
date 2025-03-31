@@ -4,7 +4,7 @@ import os
 import requests
 from dotenv import load_dotenv
 from fastapi.responses import Response
-import httpx
+from UploadToCloud import upload_image_to_cloudinary
 
 
 #IntitalizingTheFastApiAPp
@@ -68,6 +68,7 @@ def main():
 
 @app.post("/generate_image/")
 # input_data Should be in Correct data format as defined above in HuggingFaceInput Class@app.post("/generate_image/")
+
 def generate_image(input_data: HuggingFaceInput):
     try:
         # Formatting input in the certain way 
@@ -79,14 +80,20 @@ def generate_image(input_data: HuggingFaceInput):
         # Gathering all the content returned by the Hugging Face Model
         image_data = calling_hugging_face(payload)
 
-        # Detailly sents the success and all
-        return Response(content=image_data, media_type="image/png", headers={"msg": "Success"})
+        # Uploading the image to Cloudinary
+        cloudinary_response = upload_image_to_cloudinary(image_data)
 
-    except HTTPException as e:
-        # Returning an error response with error details
-        return {"msg": "Error occurred", "error_detail": str(e.detail)}
+        # ByChance Errror Occurred
+        if "error" in cloudinary_response:
+            return {"msg": f"Error occurred while uploading to Cloudinary: {cloudinary_response['error']}"}
+        
+        # return These keys to the FE
+        return {
+            "msg": "Image uploaded successfully",
+            "image_url": cloudinary_response['secure_url'],  # Image URL 
+            "image_id": cloudinary_response['public_id']  # Image ID 
+        }
 
     except Exception as e:
-        # Detailly sents the erroe and all
-        return {"msg": "Error occurred", "error_detail": str(e)}
-
+        # Handle errors during the Hugging Face or Cloudinary upload process
+        return {"msg": f"An error occurred: {str(e)}"}
