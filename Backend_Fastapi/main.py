@@ -16,7 +16,7 @@ app = FastAPI()
 
 # This does the validation of data imported from the pydantic library
 #  If it is expecting text as a string then if int is passed it throws error
-class HuggingFace(BaseModel):
+class HuggingFaceInput(BaseModel):
     text: str
 
 #In this we are taking the api key by using .env variable
@@ -52,3 +52,9 @@ def query_hugging_face(payload: dict):
     response = requests.post(HUGGING_FACE_URL, headers=headers, json=payload)
     #All the content returend by the Hugingface url is returned to the caller of the function
     return response.content 
+
+#Whenever the i sent at its url/generate-image it runs the generate_image fn automaticaly
+@app.post("/generate_image/")
+# input_data Should be in Correct data format as defined above in HuggingFaceInput Class
+def generate_image(input_data: HuggingFaceInput):
+
