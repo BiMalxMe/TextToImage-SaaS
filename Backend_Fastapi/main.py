@@ -30,6 +30,25 @@ MODEL_NAME = "CompVis/stable-diffusion-v-1-4-original"
 HUGGING_FACE_URL = f"https://api-inference.huggingface.co/models/{MODEL_NAME}"
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World","Secret":secret_key}
+
+#Payload Or Data expects a Dictionary type (I Think the SDK Expects it) 
+# Dict is like person = {
+#     "name": "Bimal",
+#     "age": 20,
+#     "city": "Nepali New York i.e Ratnapark"
+# }
+
+
+#The data should come in a type of key value pair
+#Authorization Headers are Sent using the api key
+
+
+def query_hugging_face(payload: dict):
+    headers = {
+        "Authorization": f"Bearer {secret_key}"  
+    }
+    #rEQUEST LIBRARY IS USED FOR THE CALLING APIS
+    # OUR data is sent in the form of json as the dict is already in that format
+    response = requests.post(HUGGING_FACE_URL, headers=headers, json=payload)
+    #All the content returend by the Hugingface url is returned to the caller of the function
+    return response.content 
