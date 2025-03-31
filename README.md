@@ -1,50 +1,24 @@
-# Text-to-Image Generator
+# Text-to-Image Generator Backend Completion
 
-Yo project ek **Text-to-Image Generator** ho jun **FastAPI** (Python) backend ra **Next.js** (React) frontend ko sath banayeko cha. Yo **Hugging Face Inference API** ko upyog garera text prompts bata image generate garcha. Generated image haru **Cloudinary** ma upload garincha ra URL frontend ma direct path garera display garincha. Data management ko lagi **Prisma ORM** ra **PostgreSQL** ko upyog garincha, jaha generated image URLs ra prompts store garincha.
+## Overview
 
-## Steps to Build:
+The main backend of the Text-to-Image Generator using FastAPI has been completed successfully. The backend now integrates with the Stable Diffusion AI model, processes the generated data, and stores the images on Cloudinary for secure storage and easy access. The data is ready for transmission to the frontend.
 
-### 1. **Backend Framework Setup**
-   - FastAPI setup garne backend banai image generation handle garne.
+## Key Features:
+- **Stable Diffusion AI Model Integration**: Successfully integrated Stable Diffusion for text-to-image generation.
+- **Cloudinary Storage**: Stored generated images on Cloudinary for seamless image management and access.
+- **API Data Ready**: Prepared the backend data for efficient transmission to the frontend.
 
-### 2. **Frontend Framework Setup**
-   - Next.js frontend setup garne jaha users le text prompts input garna sakincha.
+## Backend Architecture
 
-### 3. **Hugging Face API Integration**
-   - Text-to-image generation ko lagi Hugging Face API integrate garne.
+The FastAPI server is now fully functional, handling the processing, image generation, and storage.
 
-### 4. **Database Setup with Prisma**
-   - Prisma ORM setup garne ra PostgreSQL sanga connect garne.
+![Backend Completion](https://github.com/user-attachments/assets/2a81bd81-8bf7-468e-89ea-46fda74362ef)
 
-### 5. **Define Database Models**
-   - Image prompts ra URLs store garne ko lagi database schema define garne.
+## Next Steps
 
-### 6. **User Authentication**
-   - Optional: User authentication setup garne, jasma login/registration ko features huncha.
+- Implement frontend integration using Next.js.
+- Set up authentication for secure image requests.
+- Test end-to-end transmission from backend to frontend.
 
-### 7. **Generate Image with Text Prompt**
-   - User le diye ko text prompt ko basis ma image generate garne.
-
-### 8. **Store Data in Database**
-   - Generated image ko URL ra prompt database ma store garne.
-
-### 9. **Cloud Storage Integration**
-   - Image haru cloud storage (e.g., Cloudinary) ma upload garne ra URL store garne.
-
-### 10. **Frontend Image Display**
-   - Frontend ma generated image display garne.
-
-### 11. **Notification System with React-Toastify**
-   - **React-Toastify** ko madat le users lai success ya error messages dikhne.
-
-### 12. **API Communication Between Frontend and Backend**
-   - Frontend ra backend ko bich API calls garera data transfer garne.
-
-### 13. **Testing Image Generation**
-   - Image generation ko process test garne ra ensure garne sabai kura sahi cha.
-
-### 14. **Deploy Backend**
-   - FastAPI backend ko deployment garne jasto **Railway** ya **Render** platforms ma.
-
-### 15. **Deploy Frontend**
-   - Next.js frontend ko deployment garne jasto **Vercel** ya **Netlify** ma.
+## Frontend Chai Auudai Xa kehi din ma
