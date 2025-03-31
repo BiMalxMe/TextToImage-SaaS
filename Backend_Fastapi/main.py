@@ -67,17 +67,26 @@ def main():
     return {"msg": "bimal"}
 
 @app.post("/generate_image/")
-# input_data Should be in Correct data format as defined above in HuggingFaceInput Class
+# input_data Should be in Correct data format as defined above in HuggingFaceInput Class@app.post("/generate_image/")
 def generate_image(input_data: HuggingFaceInput):
-        
-        # Formatting input in the cetain way 
+    try:
+        # Formatting input in the certain way 
         # {
-        #      "input": _________#TextUserWantToSend
+        #      "inputs": _________#TextUserWantToSend
         # }
         payload = {"inputs": input_data.text}
 
-        #Gathering all the content retrned by the hugging face Model
+        # Gathering all the content returned by the Hugging Face Model
         image_data = calling_hugging_face(payload)
 
-        # Return the image binary data in content(content ma sabi image aux)
-        return Response(content=image_data, media_type="image/png")
+        # Detailly sents the success and all
+        return Response(content=image_data, media_type="image/png", headers={"msg": "Success"})
+
+    except HTTPException as e:
+        # Returning an error response with error details
+        return {"msg": "Error occurred", "error_detail": str(e.detail)}
+
+    except Exception as e:
+        # Detailly sents the erroe and all
+        return {"msg": "Error occurred", "error_detail": str(e)}
+
