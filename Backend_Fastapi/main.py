@@ -1,12 +1,16 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,HTTPException
 from pydantic import BaseModel
 import os
 import requests
 from dotenv import load_dotenv
+from fastapi.responses import Response
+import httpx
+
 
 
 #IntitalizingTheFastApiAPp
 app = FastAPI()
+load_dotenv()
 
 
 # We should import the package pip install dot-env to access the variables of the main .env file
@@ -21,6 +25,8 @@ class HuggingFaceInput(BaseModel):
 
 #In this we are taking the api key by using .env variable
 secret_key=os.getenv("Huggingface_Token")
+if not secret_key:
+    raise HTTPException(status_code=500, detail="Huggingface_Token not found in the .env file")
 
 #The model name we are using is for the text to image found in the Hugging face
 # ITs ai model and our data is sent and processed at thee models environmet
@@ -54,17 +60,19 @@ def calling_hugging_face(payload: dict):
     return response.content 
 
 #Whenever the i sent at its url/generate-image it runs the generate_image fn automaticaly
-@app.post("/generate_image/")
+@app.get("/generate_image/")
 # input_data Should be in Correct data format as defined above in HuggingFaceInput Class
-def generate_image(input_data: HuggingFaceInput):
+async def generate_image(input_data: HuggingFaceInput):
         
         # Formatting input in the cetain way 
         # {
         #      "input": _________#TextUserWantToSend
         # }
-        payload = {"inputs": input_data.text}
+        payload = {"inputs": "man"}
 
         #Gathering all the content retrned by the hugging face Model
-        image_data = calling_hugging_face(payload)
+        image_data =await calling_hugging_face(payload)
+
+        return Response(content=image_data)
 
 
