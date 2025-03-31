@@ -1,0 +1,13 @@
+# Python virtual environment inside Backend_Fastapi
+Backend_Fastapi/venv/
+Backend_Fastapi/__pycache__
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Other Python-related ignores
+*.db
+*.sqlite3
+*.log
