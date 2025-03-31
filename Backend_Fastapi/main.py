@@ -43,7 +43,7 @@ HUGGING_FACE_URL = f"https://api-inference.huggingface.co/models/{MODEL_NAME}"
 #Authorization Headers are Sent using the api key
 
 
-def query_hugging_face(payload: dict):
+def calling_hugging_face(payload: dict):
     headers = {
         "Authorization": f"Bearer {secret_key}"  
     }
@@ -57,4 +57,14 @@ def query_hugging_face(payload: dict):
 @app.post("/generate_image/")
 # input_data Should be in Correct data format as defined above in HuggingFaceInput Class
 def generate_image(input_data: HuggingFaceInput):
+        
+        # Formatting input in the cetain way 
+        # {
+        #      "input": _________#TextUserWantToSend
+        # }
+        payload = {"inputs": input_data.text}
+
+        #Gathering all the content retrned by the hugging face Model
+        image_data = calling_hugging_face(payload)
+
 
