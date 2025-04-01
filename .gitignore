@@ -12,3 +12,29 @@ __pycache__/
 *.sqlite3
 *.log
 .env
+
+# Ignore all node_modules folders in any directory
+**/node_modules/
+
+# Next.js build and dependencies
+.next/
+out/
+dist/
+
+# Next.js environment variables
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+vercel-debug.log*
+
+# IDE-specific ignores (optional)
+.vscode/
+.idea/
+*.swp
