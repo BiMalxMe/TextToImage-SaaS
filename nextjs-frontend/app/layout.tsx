@@ -1,22 +1,19 @@
 import { type Metadata } from 'next'
 import {
   ClerkProvider,
-  SignInButton,
-  SignUpButton,
   SignedIn,
   SignedOut,
   UserButton,
+  SignIn
 } from '@clerk/nextjs'
 import { Poppins } from 'next/font/google'
 import './globals.css'
 
-
 const poppins = Poppins({
-  weight : '400',
+  weight: '400',
   variable: "--font-poppins",
   subsets: ["latin"],
 });
-
 
 export const metadata: Metadata = {
   title: 'Clerk Next.js Quickstart',
@@ -31,17 +28,17 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${poppins.variable} ${poppins.variable} antialiased`}>
-          <header className="flex justify-end items-center p-4 gap-4 h-16">
+        <body className={`${poppins.variable} antialiased`}>
+          <header className="flex justify-center items-center p-4 h-screen">
             <SignedOut>
-              <SignInButton />
-              <SignUpButton />
+              <SignIn routing='hash'/>
             </SignedOut>
             <SignedIn>
-              <UserButton />
+              <div className="absolute top-4 right-4">
+                <UserButton />
+              </div>
             </SignedIn>
           </header>
-          {children}
         </body>
       </html>
     </ClerkProvider>
