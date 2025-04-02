@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function ProtectedPage() {
-  const { isLoaded, isSignedIn } = useUser();
+  const { isLoaded, isSignedIn,user } = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -18,5 +18,5 @@ export default function ProtectedPage() {
     return <div>Loading...</div>;
   }
 
-  return <div>This page is protected.</div>;
+  return <div>This page is protected.{user.firstName}</div>;
 }
