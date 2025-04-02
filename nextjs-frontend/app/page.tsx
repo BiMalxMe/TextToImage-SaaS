@@ -1,7 +1,11 @@
-export default function Home(){
+import { SignInButton, UserButton } from '@clerk/nextjs';
+
+export default function Home() {
   return (
     <div>
-      bimal chalise
+      <h1>Welcome!</h1>
+      <SignInButton />
+      <UserButton/>
     </div>
-  )
+  );
 }
