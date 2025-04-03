@@ -15,10 +15,12 @@ export default function AuthWrapper({ children }: AuthWrapperProps) {
 
   useEffect(() => {
     if (isLoaded) {
-      if (isSignedIn && pathname !== '/protected') {
-        router.push('/protected');
-      } else if (!isSignedIn && pathname !== '/sign-in'){
-          router.push('/sign-in')
+      if (isSignedIn && pathname !== '/dashboard') {
+        // Redirect signed-in users to the dashboard if they are not already there
+        router.push('/dashboard');
+      } else if (!isSignedIn && pathname !== '/sign-in') {
+        // Redirect non-signed-in users to the sign-in page if they are not already there
+        router.push('/');
       }
     }
   }, [isLoaded, isSignedIn, router, pathname]);
@@ -28,9 +30,5 @@ export default function AuthWrapper({ children }: AuthWrapperProps) {
   }
 
   // Render children only if the user is authenticated, or if they are on a public page.
-  if (isSignedIn || pathname === '/sign-in') {
-    return <>{children}</>;
-  }
-
-  return null;
+  return children;
 }

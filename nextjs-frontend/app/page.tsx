@@ -1,11 +1,11 @@
 import { SignInButton, UserButton } from '@clerk/nextjs';
+import { Header } from './components/Header';
+import Head from 'next/head';
 
 export default function Home() {
   return (
-    <div>
-      <h1>Welcome!</h1>
-      <SignInButton />
-      <UserButton/>
+    <div className='text-white'>
+      <Header />
     </div>
   );
 }

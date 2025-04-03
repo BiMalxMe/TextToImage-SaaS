@@ -1,3 +1,5 @@
+import "./globals.css";
+
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import AuthWrapper from './components/AuthWrapper';
