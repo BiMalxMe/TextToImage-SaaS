@@ -13,7 +13,7 @@ export const Card: React.FC<CardProps> = ({ image, state }) => {
       {!state && <p className="text-green-500 mt-2">
         </p>}
         <div className="flex flex-col items-center justify-center h-full">
-  <Loading />
+  <Loading h={15} w={15}/>
 </div>
 
     </div>
