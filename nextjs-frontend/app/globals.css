@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 body {
     background-color: #0f203b; /* Equivalent to Tailwind's bg-blue-500 */
