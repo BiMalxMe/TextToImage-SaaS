@@ -8,12 +8,14 @@ type CardProps = {
 
 export const Card: React.FC<CardProps> = ({ image, state }) => {
   return (
-    <div className=" border rounded-lg shadow-md h-102 w-102" >
+    <div className=" border rounded-lg shadow-lg shadow-blue-950 h-102 w-102" >
       <img src={typeof image === "string" ? image : ""}  className="w-full h-auto rounded-md" />
       {!state && <p className="text-green-500 mt-2">
-        <span className="loading loading-dots loading-lg"><Loading /></span>
         </p>}
-      <div>Bimal</div>
+        <div className="flex flex-col items-center justify-center h-full">
+  <Loading />
+</div>
+
     </div>
   );
 };

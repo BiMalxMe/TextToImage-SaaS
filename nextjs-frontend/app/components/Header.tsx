@@ -24,7 +24,7 @@ export const Header = () => {
     };
 
     return (
-        <div className="bg-blue-900 rounded-xl sticky mt-10 w-3/4 mx-auto py-5 flex items-center justify-between px-5">
+        <div className="bg-blue-950 rounded-xl sticky mt-10 w-3/4 mx-auto py-5 flex items-center justify-between px-5">
             <div className="scaling">
                 <Logo />
             </div>

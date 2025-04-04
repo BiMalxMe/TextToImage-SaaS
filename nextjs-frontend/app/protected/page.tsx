@@ -54,7 +54,7 @@ export default function ProtectedPage() {
       )}
 
       {/* Buttons on the same line */}
-      <div className="flex justify-between mt-20 mx-auto w-3/4">
+      <div className="flex justify-between mt-20 mx-auto w-3/4 ">
         <DarkButton text="Donate Us" />
         <DarkButton text="Generated History" />
       </div>
