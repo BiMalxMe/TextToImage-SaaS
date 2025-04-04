@@ -15,9 +15,9 @@ export default function AuthWrapper({ children }: AuthWrapperProps) {
 
   useEffect(() => {
     if (isLoaded) {
-      if (isSignedIn && pathname !== '/dashboard') {
-        // Redirect signed-in users to the dashboard if they are not already there
-        router.push('/dashboard');
+      if (isSignedIn && pathname !== '/protected') {
+        // Redirect signed-in users to the protected if they are not already there
+        router.push('/protected');
       } else if (!isSignedIn && pathname !== '/sign-in') {
         // Redirect non-signed-in users to the sign-in page if they are not already there
         router.push('/');
