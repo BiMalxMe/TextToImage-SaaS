@@ -34,7 +34,9 @@ export const Header = () => {
                 </div>
             ) : (
                 <div className="scaling">
-                    <button onClick={handleRegisterClick}>Register</button>
+                    <button onClick={handleRegisterClick}
+                    className='hover:bg-blue-950 p-3 rounded-full'
+                    >Register</button>
                 </div>
             )}
         </div>
