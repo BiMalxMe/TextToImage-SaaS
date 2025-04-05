@@ -29,13 +29,13 @@ export const Header = () => {
                 <Logo />
             </div>
             {isSignedIn ? (
-                <div className="scaling">
+                <div >
                     <UserButton />
                 </div>
             ) : (
-                <div className="scaling">
+                <div >
                     <button onClick={handleRegisterClick}
-                    className='hover:bg-blue-950 p-3 rounded-full'
+                    className='hover:bg-blue-900 p-3 rounded-full cursor-pointer'
                     >Register</button>
                 </div>
             )}

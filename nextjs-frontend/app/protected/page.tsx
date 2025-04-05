@@ -9,7 +9,6 @@ import DarkButton from "../components/Button";
 import { Card } from "../components/Card";
 import { Download } from "../components/Download";
 import { Share } from "../components/Share";
-import KhaltiButton from "../components/KhaltiButton";
 import Link from "next/link"
 
 export default function ProtectedPage() {
@@ -17,6 +16,7 @@ export default function ProtectedPage() {
   const { isLoaded, isSignedIn, user } = useUser();
   const [enterd, setentered] = useState(false);
   const router = useRouter();
+  const [inputedtext,setInputText] = useState("")
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -42,7 +42,8 @@ export default function ProtectedPage() {
           <Input
             text="Describe the image you want to create..."
             clicked={enterd}
-          />
+            onchange={(e)=>setInputText(e.target.value)}
+            />
         </div>
         <div className="mt-3 flex justify-center items-center mx-auto">
           <DarkButton
@@ -71,12 +72,10 @@ export default function ProtectedPage() {
 </div>
 
      
-         {/* Card Component */}
          <div>
            <Card state={true} />
          </div>
      
-         {/* Share Button */}
          <div className="flex flex-col justify-end">
          <div className="w-[45px] h-[45px] hover:bg-slate-600 flex items-center justify-center rounded-4xl hover">
 
@@ -99,6 +98,7 @@ export default function ProtectedPage() {
 
 
         <DarkButton text="Generated History" />
+        
       </div>
     </div>
   );

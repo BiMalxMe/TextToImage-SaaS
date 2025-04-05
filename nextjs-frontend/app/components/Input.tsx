@@ -1,11 +1,13 @@
 interface InputProps {
     text: string;
     clicked: boolean;
+    onchange?:(e: React.ChangeEvent<HTMLInputElement>)=>void
   }
   
-  export const Input = ({ text, clicked }: InputProps) => {
+  export const Input = ({ text, clicked,onchange }: InputProps) => {
     return (
       <input
+      onChange={onchange}
         type="text"
         placeholder={text}
         disabled={clicked} // Disables input if clicked is true
