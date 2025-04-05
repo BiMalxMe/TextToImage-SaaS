@@ -9,6 +9,8 @@ import DarkButton from "../components/Button";
 import { Card } from "../components/Card";
 import { Download } from "../components/Download";
 import { Share } from "../components/Share";
+import KhaltiButton from "../components/KhaltiButton";
+import Link from "next/link"
 
 export default function ProtectedPage() {
   const [Generated, setGenerated] = useState(false);
@@ -88,7 +90,14 @@ export default function ProtectedPage() {
 
       {/* Buttons on the same line */}
       <div className="flex justify-between mt-20 mb-20 mx-auto w-3/4 ">
-        <DarkButton text="Donate Us" />
+
+
+      <Link href="/checkout">
+      <DarkButton text="Donate Us" />
+    </Link>
+ 
+
+
         <DarkButton text="Generated History" />
       </div>
     </div>

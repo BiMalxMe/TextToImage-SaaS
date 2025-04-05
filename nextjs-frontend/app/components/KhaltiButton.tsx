@@ -41,7 +41,7 @@ export default function KhaltiButton({ amount = 1000 }: { amount: number }) {
   return (
     <button
       onClick={() => checkout.show({ amount })}
-      className="bg-purple-700 text-white px-4 py-2 rounded"
+      className="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-900 cursor-pointer"
     >
       Pay Rs.{amount / 100} with Khalti
     </button>
