@@ -18,7 +18,7 @@ export default function AuthWrapper({ children }: AuthWrapperProps) {
       if (isSignedIn && pathname !== '/protected' && pathname!="/checkout") {
         // Redirect signed-in users to the protected if they are not already there
         router.push('/protected');
-      } else if (!isSignedIn && pathname !== '/sign-in' ) {
+      } else if (!isSignedIn && pathname !== '/sign-in' && pathname !== "/sign-up" ) {
         // Redirect non-signed-in users to the sign-in page if they are not already there
         router.push('/');
       }

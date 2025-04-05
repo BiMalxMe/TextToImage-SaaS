@@ -38,26 +38,32 @@ export default function LandingPage() {
             With <span className="font-semibold">Bimalxgenerate</span>, turn your imagination into AI-powered artwork. Perfect for content creators, designers, marketers, and dreamers.
           </p>
 
-          <div className="w-full space-y-4">
+          <div className="w-full space-y-4 ">
+          <Link href={"/sign-up"}>
+          <button
+              className="mb-5 cursor-pointer w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white font-semibold py-4 rounded-xl text-lg hover:scale-105 transition-transform"
+            >
+              Signup
+            </button></Link> 
           <Link href={"/sign-in"}>
           <button
               className="cursor-pointer w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white font-semibold py-4 rounded-xl text-lg hover:scale-105 transition-transform"
             >
-              Generate Image
+              Login
             </button></Link> 
             
           </div>
         </div>
       </div>
+      <div className="bg-black py-20 text-white text-center">
+  <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-300 text-transparent bg-clip-text">
+    How It Works
+  </h2>
+  <p className="text-lg max-w-xl mx-auto text-gray-300">
+    Just enter a text description, and our AI instantly turns your idea into a beautiful image.
+  </p>
+</div>
 
-      <div className="bg-black/80 py-20 text-white text-center">
-        <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-purple-300 via-pink-300 to-yellow-300 text-transparent bg-clip-text">
-          How It Works
-        </h2>
-        <p className="text-lg max-w-2xl mx-auto">
-          Simply enter a text description. Our AI transforms your idea into a beautiful visual — instantly.
-        </p>
-      </div>
 
       <footer className="bg-black py-6 text-white text-center">
         <p>© 2025 Bimalxgenerate. All Rights Reserved.</p>
