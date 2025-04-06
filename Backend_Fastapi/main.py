@@ -5,11 +5,21 @@ import requests
 from dotenv import load_dotenv
 from fastapi.responses import Response
 from UploadToCloud import upload_image_to_cloudinary
+from fastapi.middleware.cors import CORSMiddleware
 
 
 #IntitalizingTheFastApiAPp
 app = FastAPI()
 load_dotenv()
+
+#all url can send the request to this backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  #after deployment use domain name
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # We should import the package pip install dot-env to access the variables of the main .env file
