@@ -13,24 +13,24 @@ import Link from "next/link";
 import Image from "next/image";
 import ApiHandler from "../components/ApiHandler";
 
-export default async function ProtectedPage() {
-  const [Generated, setGenerated] = useState(false);
+export default function ProtectedPage() {
+  const [generated, setGenerated] = useState(false);
   const { isLoaded, isSignedIn, user } = useUser();
-  const [entered, setentered] = useState(false);
+  const [entered, setEntered] = useState(false);
   const router = useRouter();
-  const [inputedtext, setInputText] = useState("");
-  const [imageUrl,setimageUrl] = useState("")
+  const [inputedText, setInputText] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const username = user?.publicMetadata?.username;
+console.log(username)
+
   const handleGenerateImage = async () => {
-    if (inputedtext) {
-      const { image_url } = await ApiHandler({ text: inputedtext });
-      setentered(false);  // Set image URL to state
-      setGenerated(false); // Trigger image generation display
-      setimageUrl(imageUrl)   // Set entered state to true
+    if (inputedText) {
+      const { image_url } = await ApiHandler({ text: inputedText });
+      setImageUrl(image_url); // Set the image URL from API response
+      setGenerated(true); // Trigger image generation display
+      setEntered(false); // Reset entered state
     }
   };
-  if(entered){
-    const { image_url }: { image_url: string } = await ApiHandler({ text: inputedtext });
-  }
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -64,15 +64,15 @@ export default async function ProtectedPage() {
             text="Generate Image"
             onClick={() => {
               setGenerated(true);
-              setentered(true);
-              handleGenerateImage()
+              setEntered(true);
+              handleGenerateImage();
             }}
           />
         </div>
       </div>
 
       {/* Generated Image Section */}
-      {Generated && (
+      {generated && (
         <div className="flex flex-col items-center mt-4 w-full text-slate-400">
           <div className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 text-xl font-semibold">
             Here is Your Generated Image
