@@ -1,32 +1,78 @@
 'use client';
 
-import { useUser } from '@clerk/nextjs';
+import { SignedIn, useUser } from '@clerk/nextjs';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
+import { Loading } from './Loading';
 
 interface AuthWrapperProps {
   children: React.ReactNode;
 }
 
 export default function AuthWrapper({ children }: AuthWrapperProps) {
-  const { isLoaded, isSignedIn } = useUser();
+  const { isLoaded, isSignedIn, user } = useUser();
   const router = useRouter();
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (isLoaded) {
-      if (isSignedIn && pathname !== '/protected' && pathname!="/checkout") {
-        // Redirect signed-in users to the protected if they are not already there
-        router.push('/protected');
-      } else if (!isSignedIn && pathname !== '/sign-in' && pathname !== "/sign-up" ) {
-        // Redirect non-signed-in users to the sign-in page if they are not already there
-        router.push('/');
+  //Data is coming Properly
+// console.log( user?.emailAddresses?.[0]?.emailAddress)
+// console.log(user?.fullName )
+useEffect(() => {
+    const handleAuth = async () => {
+      if (isLoaded) {
+        if (isSignedIn) {
+          // Redirect signed-in users to protected page if not already there
+          if (pathname !== '/protected' && pathname !== '/checkout') {
+            router.push('/protected');
+          }
+        } else {
+          // Redirect non-signed-in users to sign-in page if not already there
+          if (pathname !== '/sign-in' && pathname !== '/sign-up') {
+            router.push('/');
+          }
+        }
       }
+    };
+
+    handleAuth();
+  }, [isLoaded, isSignedIn, router, pathname, user]);
+useEffect(()=>{
+  if(isSignedIn) {
+    // Call API route to create user in the database
+    const email = user?.emailAddresses?.[0]?.emailAddress || '';
+    const fullName = user?.fullName || '';
+    
+    // POST request to create the user
+    async function fetchingFromApiUser(){
+    try {
+      const response = await fetch('/api/createUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, fullName }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log('User created:', data.user);
+      } else {
+        console.error('Error creating user:', data.error);
+      }
+    } catch (error) {
+      console.error('Error calling API:', error);
     }
-  }, [isLoaded, isSignedIn, router, pathname]);
+  }
+}
+},[SignedIn]
+)
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-screen flex flex-col items-center justify-center">
+        <Loading h={33} w={33} />
+      </div>
+    );
   }
 
   // Render children only if the user is authenticated, or if they are on a public page.
