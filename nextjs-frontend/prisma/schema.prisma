@@ -16,7 +16,6 @@ model User {
   // cuid is more fast and flexible than uuid()
   id                String           @id @default(cuid())
   email             String           @unique
-  username          String?          @unique
   fullName          String?
   imageGenerations  ImageGenerated[]
   createdAt         DateTime         @default(now())
