@@ -20,15 +20,14 @@ export default function ProtectedPage() {
   const router = useRouter();
   const [inputedText, setInputText] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const username = user?.publicMetadata?.username;
-console.log(username)
+console.log(imageUrl)
 
   const handleGenerateImage = async () => {
     if (inputedText) {
       const { image_url } = await ApiHandler({ text: inputedText });
-      setImageUrl(image_url); // Set the image URL from API response
-      setGenerated(true); // Trigger image generation display
-      setEntered(false); // Reset entered state
+      setImageUrl(image_url); 
+      setGenerated(true);
+      setEntered(false); 
     }
   };
 
@@ -78,7 +77,7 @@ console.log(username)
             Here is Your Generated Image
           </div>
           {imageUrl?
-          <div id="photo">
+          <div className="p-40 bg-red-500">
             <Image
               src={imageUrl}
               alt="Cloudinary Image"
@@ -95,7 +94,7 @@ console.log(username)
             </div>
 
             <div>
-              <Card state={true} />
+              <Card state={true} image={imageUrl}/>
             </div>
 
             <div className="flex flex-col justify-end">

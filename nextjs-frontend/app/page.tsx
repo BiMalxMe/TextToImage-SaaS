@@ -4,7 +4,7 @@ import { Header } from './components/Header';
 import Link from "next/link"
 
 export const metadata = {
-  metadataBase: new URL("http://localhost:3000"), // or use https:// if using secure connection
+metadataBase: new URL("http://localhost:3000"), // Listing a base Url
   title: 'Bimalxgenerate - Text-to-Image Generator Landing Page',
   description: 'Bimalxgenerate: Transform your text descriptions into beautiful, AI-generated images. Create visuals for your projects, content, and ideas in seconds.',
   openGraph: {
