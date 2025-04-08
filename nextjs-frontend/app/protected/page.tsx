@@ -24,8 +24,8 @@ console.log(imageUrl)
 
   const handleGenerateImage = async () => {
     if (inputedText) {
-      const { image_url } = await ApiHandler({ text: inputedText });
-      setImageUrl(image_url); 
+      const response = await ApiHandler({ text: inputedText });
+      setImageUrl(response.image_url); 
       setGenerated(true);
       setEntered(false); 
     }
@@ -61,10 +61,10 @@ console.log(imageUrl)
         <div className="mt-3 flex justify-center items-center mx-auto">
           <DarkButton
             text="Generate Image"
-            onClick={() => {
+            onClick={async() => {
               setGenerated(true);
               setEntered(true);
-              handleGenerateImage();
+              await handleGenerateImage();
             }}
           />
         </div>
@@ -76,15 +76,7 @@ console.log(imageUrl)
           <div className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 text-xl font-semibold">
             Here is Your Generated Image
           </div>
-          {imageUrl?
-          <div className="p-40 bg-red-500">
-            <Image
-              src={imageUrl}
-              alt="Cloudinary Image"
-              width={100}
-              height={100}
-            />
-          </div>:""}
+         
           <div className="flex justify-center mt-4 gap-6">
             {/* Download Button */}
             <div className="flex flex-col justify-end">

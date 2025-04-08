@@ -12,7 +12,9 @@ export default async function ApiHandler({ text }: Props) {
        text: text,
      });
 
-     const imageUrl = response.data.image_url;
+     const imageUrl = response.data
+     //for checking
+     console.log(imageUrl);
 
      return imageUrl;
    } catch (error) {

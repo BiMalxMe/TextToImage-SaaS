@@ -9,10 +9,10 @@ type CardProps = {
 
 export const Card: React.FC<CardProps> = ({ image, state }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-
+console.log(image)
   useEffect(() => {
     setIsImageLoaded(false);
-  }, [image, state]);
+  }, [image]);
 
   const isValidImage = typeof image === "string" && image.trim() !== "";
 
