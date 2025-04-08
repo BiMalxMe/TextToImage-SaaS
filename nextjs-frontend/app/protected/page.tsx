@@ -10,25 +10,65 @@ import { Card } from "../components/Card";
 import { Download } from "../components/Download";
 import { Share } from "../components/Share";
 import Link from "next/link";
-import Image from "next/image";
 import ApiHandler from "../components/ApiHandler";
+import { emailAddresses } from "@clerk/clerk-sdk-node";
 
 export default function ProtectedPage() {
+
+  // Check if user is loaded and signed in before accessing email
+
   const [generated, setGenerated] = useState(false);
   const { isLoaded, isSignedIn, user } = useUser();
   const [entered, setEntered] = useState(false);
   const router = useRouter();
   const [inputedText, setInputText] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const email = isLoaded && isSignedIn ? user?.emailAddresses?.[0]?.emailAddress : '';
+
 console.log(imageUrl)
 
   const handleGenerateImage = async () => {
+    const createImage = async (prompt: string, imageUrl: string,email:string) => {
+      console.log("o chai hoo hai" + prompt + imageUrl)
+      try {
+        // Make the POST request to imageGen  API endpoint
+        const response = await fetch('/api/ImgGenerations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          
+          body: JSON.stringify({
+            prompt ,   // The prompt for the image generation
+            imageUrl, // The URL of the generated image
+          }),
+        });
+    
+        // Check if the request was successful
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Error:', errorData.error);
+          return;
+        }
+    
+        // Parse the response JSON data
+        const data = await response.json();
+        console.log('Image generated successfully:', data.imageGenerated);
+    
+      } catch (error) {
+        console.error('Error during fetch:', error);
+      }
+    };
+    
     if (inputedText) {
       const response = await ApiHandler({ text: inputedText });
       setImageUrl(response.image_url); 
       setGenerated(true);
       setEntered(false); 
+      createImage(inputedText,imageUrl,email);
     }
+   
+    
   };
 
   useEffect(() => {
