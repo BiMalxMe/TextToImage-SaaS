@@ -22,6 +22,14 @@ The FastAPI server is now fully functional, handling the processing, image gener
 - Test end-to-end transmission from backend to frontend.
 
 ## Frontend Chai Auudai Xa kehi din ma
-#**Backend Sanaga Sucessfully Connect vayo FE**
+##**Backend Sanaga Sucessfully Connect vayo FE**
 
 ![Screen Shot 2025-04-06 at 21 00 11](https://github.com/user-attachments/assets/55749dd9-0cf3-4503-8398-69a842785a8d)
+
+
+## **CompletedTheImageReloadingInFrontend**
+
+![Screen Shot 2025-04-08 at 06 00 45](https://github.com/user-attachments/assets/656a25e3-1a01-422b-8552-062ce9b5f85c)
+
+
+**Wokring On payment method khalti and designing DB -------- Pending**
