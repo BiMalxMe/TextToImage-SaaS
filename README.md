@@ -32,4 +32,8 @@ The FastAPI server is now fully functional, handling the processing, image gener
 ![Screen Shot 2025-04-08 at 06 00 45](https://github.com/user-attachments/assets/656a25e3-1a01-422b-8552-062ce9b5f85c)
 
 
+## **ImageGeneratedAccordingToTheGivenInput Without Hardcoding The value
+
+![Screen Shot 2025-04-08 at 22 06 30](https://github.com/user-attachments/assets/134959e4-c04e-4684-9896-10e3f603901b)
+
 **Wokring On payment method khalti and designing DB -------- Pending**
