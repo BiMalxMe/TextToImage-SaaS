@@ -18,54 +18,68 @@ export default function AuthWrapper({ children }: AuthWrapperProps) {
 // console.log( user?.emailAddresses?.[0]?.emailAddress)
 // console.log(user?.fullName )
 useEffect(() => {
-    const handleAuth = async () => {
-      if (isLoaded) {
-        if (isSignedIn) {
-          // Redirect signed-in users to protected page if not already there
-          if (pathname !== '/protected' && pathname !== '/checkout') {
-            router.push('/protected');
-          }
-        } else {
-          // Redirect non-signed-in users to sign-in page if not already there
-          if (pathname !== '/sign-in' && pathname !== '/sign-up') {
-            router.push('/');
-          }
-        }
-      }
-    };
-
-    handleAuth();
-  }, [isLoaded, isSignedIn, router, pathname, user]);
-useEffect(()=>{
-  if(isSignedIn) {
-    // Call API route to create user in the database
-    const email = user?.emailAddresses?.[0]?.emailAddress || '';
-    const fullName = user?.fullName || '';
-    
-    // POST request to create the user
-    async function fetchingFromApiUser(){
-    try {
-      const response = await fetch('/api/createUser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, fullName }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        console.log('User created:', data.user);
-      } else {
-        console.error('Error creating user:', data.error);
-      }
-    } catch (error) {
-      console.error('Error calling API:', error);
+  if (isSignedIn) {
+    // Redirect signed-in users to protected page if not already there
+    if ( pathname !== '/checkout' && pathname !== '/protected' && pathname!=="/images") {
+      router.push('/protected');
+    }
+  } else {
+    // Redirect non-signed-in users to sign-in page if not already there
+    if (pathname !== '/sign-in' && pathname !== '/sign-up') {
+      router.push('/');
     }
   }
-}
-},[SignedIn]
-)
+}, [isSignedIn, pathname]);
+
+
+  useEffect(() => {
+    if (isSignedIn) {
+      const email = user?.emailAddresses?.[0]?.emailAddress || '';
+      const fullName = user?.fullName || '';
+  
+      async function createUserIfNotExists() {
+        try {
+          // Check if user exists first
+          const checkRes = await fetch('/api/UserExists', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+          });
+  
+          const checkData = await checkRes.json();
+  
+          if (checkData.exists) {
+            console.log('User already exists, skipping creation.');
+            return;
+          }
+  
+          // If not, create user
+          const response = await fetch('/api/createUser', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, fullName }),
+          });
+  
+          const data = await response.json();
+  
+          if (response) {
+            console.log('User created:', data.user);
+          } else {
+            console.error('Error creating user:', data.error);
+          }
+        } catch (error) {
+          console.error('Error during user creation:', error);
+        }
+      }
+  
+      createUserIfNotExists();
+    }
+  }, [isSignedIn, user]);
+  
 
   if (!isLoaded) {
     return (
