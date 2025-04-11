@@ -33,7 +33,7 @@ class HuggingFaceInput(BaseModel):
     text: str
 
 #In this we are taking the api key by using .env variable
-secret_key = os.getenv("Huggingface_Token")
+secret_key = os.getenv("HUGGINGFACE_TOKEN")
 if not secret_key:
     raise HTTPException(status_code=500, detail="Huggingface_Token not found in the .env file")
 
