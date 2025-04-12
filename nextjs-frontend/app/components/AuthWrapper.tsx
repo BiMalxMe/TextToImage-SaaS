@@ -1,6 +1,6 @@
 'use client';
 
-import { SignedIn, useUser } from '@clerk/nextjs';
+import {  useUser } from '@clerk/nextjs';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { Loading } from './Loading';
@@ -34,7 +34,7 @@ useEffect(() => {
     router.replace('/'); // faster redirect, avoids history clutter
     return;
   }
-}, [isLoaded, isSignedIn, pathname]);
+}, [isLoaded, isSignedIn, pathname,router]);
 
 
 

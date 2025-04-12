@@ -46,6 +46,7 @@ export default function ProtectedPage() {
           body: JSON.stringify({
             prompt, // The prompt for the image generation
             imageUrl, // The URL of the generated image
+            email
           }),
         });
 

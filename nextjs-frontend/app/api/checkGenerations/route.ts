@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     const transactions = user.imageGenerations;
 
     return NextResponse.json(transactions);
-  } catch (error) {
+  } catch  {
     return NextResponse.json({ error: "Failed to fetch transactions" }, { status: 500 });
   }
 }

@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     console.error('Error creating user:', error);
 
     // Provide more detailed error response
-    // @ts-ignore
+    // @ts-expect-error - component type is not inferred correctly
     return NextResponse.json({ error: 'Failed to create user', details: error.message  }, { status: 500 });
   }
 }

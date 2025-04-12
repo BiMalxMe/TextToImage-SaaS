@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,12 +34,12 @@ const PayPalCheckout = () => {
             const details = await actions.order.capture();
             const givenName = details.payment_source?.paypal?.name?.given_name || 'customer';
             toast.success(`🎉 Transaction completed by ${givenName}`);
-          } catch (err) {
+          } catch  {
             toast.error("Something went wrong capturing the payment.");
           }
         }}
-        onError={(err) => {
-          toast.error("PayPal Checkout Error: " + err.message);
+        onError={() => {
+          toast.error("PayPal Checkout Error");
         }}
       />
     </PayPalScriptProvider>

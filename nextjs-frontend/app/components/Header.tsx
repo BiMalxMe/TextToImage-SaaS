@@ -10,7 +10,6 @@ export const Header = () => {
   const pathname = usePathname()
   useEffect(() => {
     // Redirect signed-in users to the dashboard
-    // @ts-ignore
     if (isSignedIn && pathname !== "/protected" && pathname !== "/images") {
       router.push("/protected");
     }

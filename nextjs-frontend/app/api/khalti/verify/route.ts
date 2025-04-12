@@ -1,10 +1,10 @@
 // app/api/khalti/initiate/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import {  NextResponse } from 'next/server';
 import axios from 'axios';
 
 const KHALTI_SECRET_KEY = process.env.KHALTI_SECRET_KEY; // Use env variable in production
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   const payload = {
     return_url: 'http://localhost:3000/protected',  // This should be your actual return URL
     website_url: 'http://localhost:3000/',
@@ -34,7 +34,8 @@ export async function POST(req: NextRequest) {
     const { payment_url } = response.data;
     console.log("heere is "+payment_url)
     return NextResponse.json({ payment_url });
-  } catch (error: any) {
+  } catch (error) {
+    //@ts-expect-error - component type is not inferred correctly
     console.error('Khalti Error:', error.response?.data || error.message);
     return NextResponse.json({ error: 'Failed to initiate payment' }, { status: 500 });
   }

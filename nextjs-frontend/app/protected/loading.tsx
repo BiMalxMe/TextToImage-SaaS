@@ -2,7 +2,7 @@
 import { Loading } from "../components/Loading";
 
 
-export default function(){
+export default function Loadingg(){
 
     return (
         <div className="flex flex-col justify-center items-center h-screen">

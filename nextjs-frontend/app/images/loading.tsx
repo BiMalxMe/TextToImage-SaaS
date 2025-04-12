@@ -1,8 +1,8 @@
 "use client"
-import { useUser,SignedIn } from "@clerk/nextjs";
+import { SignedIn } from "@clerk/nextjs";
 
 
-export default function(){
+export default function Loading(){
     
 console.log(SignedIn)
     return (
