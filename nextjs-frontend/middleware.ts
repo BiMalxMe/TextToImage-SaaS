@@ -1,21 +1,18 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-export default function middleware(req :NextRequest) {
-  // You can handle any custom logic here, for example, authentication or access control.
-  // If you just want to allow certain public routes, you can check the request URL.
+const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)',"/"])
 
-  const publicRoutes = ['/sign-in', '/sign-up', '/']; // or better: use RegExp
-
-  if (publicRoutes.some(route => req.nextUrl.pathname.startsWith(route))) {
-    // If the route is public, just allow the request to pass through
-    return NextResponse.next();
+export default clerkMiddleware(async (auth, req) => {
+  if (!isPublicRoute(req)) {
+    await auth.protect()
   }
-
-  // Otherwise, you can redirect or send a custom response here if needed
-  // Example: return NextResponse.redirect(new URL('/login', req.url));
-  return NextResponse.next();
-}
+})
 
 export const config = {
-  matcher: ['/((?!_next/image|_next/static|favicon.ico|robots.txt).*)'],
-};
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
+  ],
+}
