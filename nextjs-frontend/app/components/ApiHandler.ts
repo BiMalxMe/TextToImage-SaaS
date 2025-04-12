@@ -6,7 +6,6 @@ type Props = {
 
 export default async function ApiHandler({ text }: Props) {
   const Backend_url = process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL;
-  console.log(Backend_url)
    try {
      const response = await axios.post(`${Backend_url}`, {
        text: text,

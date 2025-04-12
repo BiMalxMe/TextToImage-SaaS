@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
-const KHALTI_SECRET_KEY = 'd4de691bda4949d0bd974e24cefe9983'; // Use env variable in production
+const KHALTI_SECRET_KEY = process.env.KHALTI_SECRET_KEY; // Use env variable in production
 
 export async function POST(req: NextRequest) {
   const payload = {
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     );
 
     const { payment_url } = response.data;
-    console.log(payment_url)
+    console.log("heere is "+payment_url)
     return NextResponse.json({ payment_url });
   } catch (error: any) {
     console.error('Khalti Error:', error.response?.data || error.message);
