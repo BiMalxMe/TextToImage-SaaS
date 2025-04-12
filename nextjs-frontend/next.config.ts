@@ -10,9 +10,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    nodeMiddleware: true, // Enable Node.js middleware support
-  },};
+  /* config options here */
+};
 
 
 
