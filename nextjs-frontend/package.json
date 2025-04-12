@@ -13,6 +13,7 @@
     "@clerk/nextjs": "^6.12.12",
     "@paypal/react-paypal-js": "^8.8.3",
     "@prisma/client": "^6.5.0",
+    "autoprefixer": "^10.4.21",
     "axios": "^1.8.4",
     "khalti-checkout-web": "^2.2.0",
     "next": "15.2.4",
