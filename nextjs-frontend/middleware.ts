@@ -4,7 +4,7 @@ export default function middleware(req :NextRequest) {
   // You can handle any custom logic here, for example, authentication or access control.
   // If you just want to allow certain public routes, you can check the request URL.
 
-  const publicRoutes = ['/sign-in', '/sign-up', '/sign-up/*'];
+  const publicRoutes = ['/sign-in', '/sign-up', '/']; // or better: use RegExp
 
   if (publicRoutes.some(route => req.nextUrl.pathname.startsWith(route))) {
     // If the route is public, just allow the request to pass through
