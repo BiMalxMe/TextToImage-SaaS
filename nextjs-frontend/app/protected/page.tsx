@@ -11,10 +11,11 @@ import { Download } from "../components/Download";
 import { Share } from "../components/Share";
 import Link from "next/link";
 import ApiHandler from "../components/ApiHandler";
-import { emailAddresses } from "@clerk/clerk-sdk-node";
+
+// Import Toastify components
+import { toast } from "react-toastify";
 
 export default function ProtectedPage() {
-
   // Check if user is loaded and signed in before accessing email
 
   const [generated, setGenerated] = useState(false);
@@ -22,53 +23,61 @@ export default function ProtectedPage() {
   const [entered, setEntered] = useState(false);
   const router = useRouter();
   const [inputedText, setInputText] = useState("");
+  const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-  const email = isLoaded && isSignedIn ? user?.emailAddresses?.[0]?.emailAddress : '';
-
-console.log(imageUrl)
+  const email =
+    isLoaded && isSignedIn ? user?.emailAddresses?.[0]?.emailAddress : "";
 
   const handleGenerateImage = async () => {
-    const createImage = async (prompt: string, imageUrl: string,email:string) => {
-      console.log("o chai hoo hai" + prompt + imageUrl)
+    setLoading(true);
+    const createImage = async (
+      prompt: string,
+      imageUrl: string,
+      email: string
+    ) => {
+      console.log("o chai hoo hai" + prompt + imageUrl);
       try {
-        // Make the POST request to imageGen  API endpoint
-        const response = await fetch('/api/ImgGenerations', {
-          method: 'POST',
+        // Make the POST request to imageGen API endpoint
+        const response = await fetch("/api/ImgGenerations", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          
           body: JSON.stringify({
-            prompt ,   // The prompt for the image generation
+            prompt, // The prompt for the image generation
             imageUrl, // The URL of the generated image
           }),
         });
-    
+
         // Check if the request was successful
         if (!response.ok) {
           const errorData = await response.json();
-          console.error('Error:', errorData.error);
+          console.error("Error:", errorData.error);
+          toast.error("Failed to generate image. Please try again later.");
           return;
         }
-    
-        // Parse the response JSON data
+
         const data = await response.json();
-        console.log('Image generated successfully:', data.imageGenerated);
-    
+        console.log("Image generated successfully:", data.imageGenerated);
+        toast.success("Image generated successfully!");
       } catch (error) {
-        console.error('Error during fetch:', error);
+        console.error("Error during fetch:", error);
+        toast.error(
+          "An error occurred while generating the image. Please try again."
+        );
       }
     };
-    
-    if (inputedText) {
+
+    if (inputedText.trim()) {
       const response = await ApiHandler({ text: inputedText });
-      setImageUrl(response.image_url); 
+      setLoading(false);
+      setImageUrl(response.image_url);
       setGenerated(true);
-      setEntered(false); 
-      createImage(inputedText,imageUrl,email);
+      setEntered(false);
+      createImage(inputedText, response.image_url, email);
+    } else {
+      toast.error("Please enter a description for the image.");
     }
-   
-    
   };
 
   useEffect(() => {
@@ -100,8 +109,10 @@ console.log(imageUrl)
         </div>
         <div className="mt-3 flex justify-center items-center mx-auto">
           <DarkButton
+            disabled={loading}
             text="Generate Image"
-            onClick={async() => {
+            onClick={async () => {
+              console.log("clicked");
               setGenerated(true);
               setEntered(true);
               await handleGenerateImage();
@@ -116,21 +127,49 @@ console.log(imageUrl)
           <div className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 text-xl font-semibold">
             Here is Your Generated Image
           </div>
-         
+
           <div className="flex justify-center mt-4 gap-6">
             {/* Download Button */}
             <div className="flex flex-col justify-end">
-              <div className="w-[50px] h-[50px] hover:bg-slate-600 flex items-center justify-center rounded-4xl">
+              <div
+              //logic behind downloading the image
+              onClick={async () => {
+                if (!imageUrl) return;
+              
+                const res = await fetch(imageUrl);
+                const blob = await res.blob();
+                const url = URL.createObjectURL(blob);
+              
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "generated-image.jpg";
+                a.click();
+              
+                URL.revokeObjectURL(url);
+              }}
+              
+                className="w-[50px] h-[50px] hover:bg-slate-600 flex items-center justify-center rounded-4xl"
+              >
                 <Download />
               </div>
             </div>
 
             <div>
-              <Card state={true} image={imageUrl}/>
+              <Card state={true} image={imageUrl} />
             </div>
 
             <div className="flex flex-col justify-end">
-              <div className="w-[45px] h-[45px] hover:bg-slate-600 flex items-center justify-center rounded-4xl hover">
+              <div
+                onClick={() => {
+                  if(imageUrl){
+                  navigator.clipboard.writeText(imageUrl);
+                  toast.success("Copied To clipboard");
+                  }else{
+                    toast.error("No image generated")
+                  }
+                }}
+                className="w-[45px] h-[45px] hover:bg-slate-600 flex items-center justify-center rounded-4xl hover"
+              >
                 <Share />
               </div>
             </div>
@@ -143,8 +182,9 @@ console.log(imageUrl)
         <Link href="/checkout">
           <DarkButton text="Donate Us" />
         </Link>
-
-        <DarkButton text="Generated History" />
+        <Link href="/images">
+          <DarkButton text="Generated History" />
+        </Link>
       </div>
     </div>
   );

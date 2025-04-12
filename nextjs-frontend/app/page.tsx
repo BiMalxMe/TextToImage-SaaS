@@ -1,16 +1,23 @@
-// app/page.js
 import { Metadata } from 'next';
 import { Header } from './components/Header';
 import Link from "next/link"
 
-export const metadata = {
-metadataBase: new URL("http://localhost:3000"), // Listing a base Url
+export const metadata: Metadata = {
+  metadataBase: new URL("https://bimalxgenerate.vercel.app"),
   title: 'Bimalxgenerate - Text-to-Image Generator Landing Page',
   description: 'Bimalxgenerate: Transform your text descriptions into beautiful, AI-generated images. Create visuals for your projects, content, and ideas in seconds.',
   openGraph: {
     title: 'Bimalxgenerate - Text-to-Image Generator',
     description: 'Generate stunning visuals from your text descriptions using Bimalxgenerate AI. Quick, simple, and powerful tool for your creative needs.',
-    images: ['/images/og-image.jpg'],
+    url: 'https://bimalxgenerate.vercel.app',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Bimalxgenerate preview image',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -23,14 +30,10 @@ metadataBase: new URL("http://localhost:3000"), // Listing a base Url
 
 export default function LandingPage() {
   return (
-    <div className="h-screen bg-cover bg-center" style={{ backgroundImage: "url('/images/bg.webp')" }}>
-      <div>
-        <Header />
-      </div>
-
-      <div className="flex justify-center items-center h-[calc(100vh-80px)] px-4">
+    <div className="h-screen bg-cover bg-center">
+      <Header />
+      <section className="flex justify-center items-center h-[calc(100vh-80px)] px-4">
         <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-10 max-w-2xl w-full text-center space-y-6">
-          
           <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 text-transparent bg-clip-text drop-shadow-lg">
             Transform Your Ideas into Stunning Images
           </h1>
@@ -40,31 +43,33 @@ export default function LandingPage() {
           </p>
 
           <div className="w-full space-y-4 ">
-          <Link href={"/sign-up"}>
-          <button
-              className="mb-5 cursor-pointer w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white font-semibold py-4 rounded-xl text-lg hover:scale-105 transition-transform"
-            >
-              Signup
-            </button></Link> 
-          <Link href={"/sign-in"}>
-          <button
-              className="cursor-pointer w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white font-semibold py-4 rounded-xl text-lg hover:scale-105 transition-transform"
-            >
-              Login
-            </button></Link> 
-            
+            <Link href={"/protected"}>
+              <button className="mb-5 cursor-pointer w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white font-semibold py-4 rounded-xl text-lg hover:scale-105 transition-transform">
+                Dashboard
+              </button>
+            </Link>
+            <Link href={"/sign-up"}>
+              <button className="mb-5 cursor-pointer w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white font-semibold py-4 rounded-xl text-lg hover:scale-105 transition-transform">
+                Signup
+              </button>
+            </Link>
+            <Link href={"/sign-in"}>
+              <button className="cursor-pointer w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white font-semibold py-4 rounded-xl text-lg hover:scale-105 transition-transform">
+                Login
+              </button>
+            </Link>
           </div>
         </div>
-      </div>
-      <div className="bg-black py-20 text-white text-center">
-  <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-300 text-transparent bg-clip-text">
-    How It Works
-  </h2>
-  <p className="text-lg max-w-xl mx-auto text-gray-300">
-    Just enter a text description, and our AI instantly turns your idea into a beautiful image.
-  </p>
-</div>
+      </section>
 
+      <section className="bg-black py-20 text-white text-center">
+        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-300 text-transparent bg-clip-text">
+          How It Works
+        </h2>
+        <p className="text-lg max-w-xl mx-auto text-gray-300">
+          Just enter a text description, and our AI instantly turns your idea into a beautiful image.
+        </p>
+      </section>
 
       <footer className="bg-black py-6 text-white text-center">
         <p>© 2025 Bimalxgenerate. All Rights Reserved.</p>

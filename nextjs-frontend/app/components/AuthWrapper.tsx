@@ -18,18 +18,24 @@ export default function AuthWrapper({ children }: AuthWrapperProps) {
 // console.log( user?.emailAddresses?.[0]?.emailAddress)
 // console.log(user?.fullName )
 useEffect(() => {
-  if (isSignedIn) {
-    // Redirect signed-in users to protected page if not already there
-    if ( pathname !== '/checkout' && pathname !== '/protected' && pathname!=="/images") {
-      router.push('/protected');
-    }
-  } else {
-    // Redirect non-signed-in users to sign-in page if not already there
-    if (pathname !== '/sign-in' && pathname !== '/sign-up') {
-      router.push('/');
-    }
+  if (!isLoaded) return; // Wait until Clerk finishes loading
+
+  const allowedForSignedIn = ['/checkout', '/protected', '/images'];
+  const allowedForPublic = ['/sign-in', '/sign-up'];
+
+  // Authenticated user
+  if (isSignedIn && !allowedForSignedIn.includes(pathname)) {
+    router.replace('/protected'); // faster redirect, avoids history clutter
+    return;
   }
-}, [isSignedIn, pathname]);
+
+  // Unauthenticated user
+  if (!isSignedIn && !allowedForPublic.includes(pathname)) {
+    router.replace('/'); // faster redirect, avoids history clutter
+    return;
+  }
+}, [isLoaded, isSignedIn, pathname]);
+
 
 
   useEffect(() => {

@@ -4,11 +4,12 @@ import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import AuthWrapper from './components/AuthWrapper';
 import { Poppins } from 'next/font/google';
+import ClientLayout from './components/ClientLayout';
+import { ToastContainer } from 'react-toastify';
 
-// ✅ Load the Poppins font
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'], // Choose your desired weights
+  weight: ['400', '500', '600', '700'],
   variable: '--font-poppins',
 });
 
@@ -25,9 +26,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className={poppins.variable}>
-        {/* Apply the font and letter spacing globally */}
-        <body className="font-poppins tracking-wide"> {/* Add `tracking-wide` for more spacing */}
-          <AuthWrapper>{children}</AuthWrapper>
+        <body className="font-poppins tracking-wide">
+          <ClientLayout> 
+            {/* Buffer and browser related conversion lai handle garcha */}
+            <ToastContainer position="top-right" autoClose={3000} />
+            <AuthWrapper>{children}</AuthWrapper>
+          </ClientLayout>
         </body>
       </html>
     </ClerkProvider>

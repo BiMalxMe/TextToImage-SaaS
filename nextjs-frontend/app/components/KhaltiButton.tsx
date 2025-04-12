@@ -1,49 +1,34 @@
-// app/components/KhaltiButton.tsx
-'use client'
+"use client"
+const KhaltiButton = () => {
+  const handlePayment = async () => {
+    try {
 
-// @ts-ignore
-import KhaltiCheckout from "khalti-checkout-web";
+      //Sendin the request to the backend of khatli for the payment
 
-export default function KhaltiButton({ amount = 1000 }: { amount: number }) {
-  const config = {
-    publicKey: "test_public_key_dc74e0fd57cb46cd93832aee0a507256",
-    productIdentity: "1234567890",
-    productName: "Awesome Product",
-    productUrl: "http://localhost:3000/product",
-    eventHandler: {
-      onSuccess(payload: any) {
-        console.log("✅ Success Payload:", payload);
-
-        // Call backend API for verification
-        fetch("/api/khalti/verify", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.success) alert("Payment verified!");
-            else alert("Payment verification failed.");
-          });
-      },
-      onError(error: any) {
-        console.error(" Error:", error);
-      },
-      onClose() {
-        console.log(" Checkout closed.");
-      },
-    },
-    paymentPreference: ["KHALTI", "EBANKING", "MOBILE_BANKING"],
+      const res = await fetch('api/khalti/initiate', {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (data.payment_url) {
+        //if data is fetched then there will be redirect to the payment page
+        window.location.href = data.payment_url;
+      } else {
+        alert('Payment failed. Try again.');
+        console.log(data)
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error initiating payment.');
+    }
   };
 
-  const checkout = new KhaltiCheckout(config);
-
   return (
-    <button
-      onClick={() => checkout.show({ amount })}
-      className="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-900 cursor-pointer"
-    >
-      Pay Rs.{amount / 100} with Khalti
+
+    //Button to strt the process
+    <button onClick={handlePayment} className="bg-purple-600 text-white px-4 py-2 rounded">
+      Pay with Khalti
     </button>
   );
-}
+};
+
+export default KhaltiButton;

@@ -1,17 +1,17 @@
 "use client";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { Logo } from "./Logo";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export const Header = () => {
-  const { isLoaded, isSignedIn } = useUser();
-  const router = useRouter();
-
+  const {  isSignedIn } = useUser();
+  const router = useRouter()
+  const pathname = usePathname()
   useEffect(() => {
     // Redirect signed-in users to the dashboard
     // @ts-ignore
-    if (isSignedIn && router.pathname !== "/protected") {
+    if (isSignedIn && pathname !== "/protected" && pathname !== "/images") {
       router.push("/protected");
     }
   }, [isSignedIn, router]);
