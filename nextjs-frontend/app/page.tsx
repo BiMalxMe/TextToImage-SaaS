@@ -1,57 +1,41 @@
-"use client";
-import { UserButton, useUser } from "@clerk/nextjs";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { Metadata } from 'next';
+import { Header } from './components/Header';
 import Link from "next/link";
-import { Logo } from "./components/Logo";
 
-export const Header = () => {
-  const { isSignedIn } = useUser();
-  const router = useRouter();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    // Redirect signed-in users to the dashboard
-    if (isSignedIn && pathname !== "/protected" && pathname !== "/images") {
-      router.push("/protected");
-    }
-  }, [isSignedIn, router, pathname]);
-
-  const handleRegisterClick = () => {
-    if (!isSignedIn) {
-      router.push("/sign-in");
-    }
-  };
-
-  return (
-    <div className="bg-blue-950 rounded-xl sticky mt-10 w-full max-w-4xl mx-auto py-4 px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div className="flex items-center gap-2">
-        <Logo/>
-        <span className="text-2xl font-semibold bg-gradient-to-r from-blue-600 via-cyan-400 to-purple-500 bg-clip-text text-transparent">
-          BiMalxGenerate
-        </span>
-      </div>
-      {isSignedIn ? (
-        <UserButton />
-      ) : (
-        <button
-          onClick={handleRegisterClick}
-          className="hover:bg-blue-900 px-4 py-2 rounded-full transition duration-200"
-        >
-          Register
-        </button>
-      )}
-    </div>
-  );
+// SEO Metadata
+export const metadata: Metadata = {
+  metadataBase: new URL("https://bimalxgenerate.vercel.app"),
+  title: 'Bimalxgenerate - Text-to-Image Generator Landing Page',
+  description: 'Bimalxgenerate: Transform your text descriptions into beautiful, AI-generated images. Create visuals for your projects, content, and ideas in seconds.',
+  openGraph: {
+    title: 'Bimalxgenerate - Text-to-Image Generator',
+    description: 'Generate stunning visuals from your text descriptions using Bimalxgenerate AI. Quick, simple, and powerful tool for your creative needs.',
+    url: 'https://bimalxgenerate.vercel.app',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Bimalxgenerate preview image',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bimalxgenerate - Text-to-Image Generator',
+    description: 'Create high-quality images from text with Bimalxgenerate AI-powered tool.',
+    images: ['/images/og-image.jpg'],
+  },
+  robots: 'index, follow',
 };
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden">
-      <Header />
+<div className="min-h-screen bg-black text-white overflow-hidden">
+<Header />
 
       {/* Hero Section */}
-      <main className="pt-30 flex justify-center items-center min-h-[calc(100vh-80px)] px-4 sm:px-6 lg:px-8">
+      <main className="flex justify-center items-center h-[calc(100vh-80px)] px-4 sm:px-6 lg:px-8">
         <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 max-w-2xl w-full text-center space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 text-transparent bg-clip-text drop-shadow-lg">
             Transform Your Ideas into Stunning Images

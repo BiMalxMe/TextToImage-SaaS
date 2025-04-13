@@ -35,7 +35,7 @@ export const Header = () => {
       ) : (
         <button
           onClick={handleRegisterClick}
-          className="hover:bg-blue-900 px-4 py-2 rounded-full transition duration-200"
+          className="hover:bg-blue-700 bg-blue-700 px-4 py-2 rounded-full transition duration-200"
         >
           Register
         </button>
