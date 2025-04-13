@@ -1,51 +1,66 @@
-import { Metadata } from 'next';
-import { Header } from './components/Header';
+"use client";
+import { UserButton, useUser } from "@clerk/nextjs";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import Link from "next/link";
+import { Logo } from "./components/Logo";
 
+export const Header = () => {
+  const { isSignedIn } = useUser();
+  const router = useRouter();
+  const pathname = usePathname();
 
-//come seo tags
-export const metadata: Metadata = {
-  metadataBase: new URL("https://bimalxgenerate.vercel.app"),
-  title: 'Bimalxgenerate - Text-to-Image Generator Landing Page',
-  description: 'Bimalxgenerate: Transform your text descriptions into beautiful, AI-generated images. Create visuals for your projects, content, and ideas in seconds.',
-  openGraph: {
-    title: 'Bimalxgenerate - Text-to-Image Generator',
-    description: 'Generate stunning visuals from your text descriptions using Bimalxgenerate AI. Quick, simple, and powerful tool for your creative needs.',
-    url: 'https://bimalxgenerate.vercel.app',
-    images: [
-      {
-        url: '/images/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Bimalxgenerate preview image',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Bimalxgenerate - Text-to-Image Generator',
-    description: 'Create high-quality images from text with Bimalxgenerate AI-powered tool.',
-    images: ['/images/og-image.jpg'],
-  },
-  robots: 'index, follow',
+  useEffect(() => {
+    // Redirect signed-in users to the dashboard
+    if (isSignedIn && pathname !== "/protected" && pathname !== "/images") {
+      router.push("/protected");
+    }
+  }, [isSignedIn, router, pathname]);
+
+  const handleRegisterClick = () => {
+    if (!isSignedIn) {
+      router.push("/sign-in");
+    }
+  };
+
+  return (
+    <div className="bg-blue-950 rounded-xl sticky mt-10 w-full max-w-4xl mx-auto py-4 px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="flex items-center gap-2">
+        <Logo/>
+        <span className="text-2xl font-semibold bg-gradient-to-r from-blue-600 via-cyan-400 to-purple-500 bg-clip-text text-transparent">
+          BiMalxGenerate
+        </span>
+      </div>
+      {isSignedIn ? (
+        <UserButton />
+      ) : (
+        <button
+          onClick={handleRegisterClick}
+          className="hover:bg-blue-900 px-4 py-2 rounded-full transition duration-200"
+        >
+          Register
+        </button>
+      )}
+    </div>
+  );
 };
 
 export default function LandingPage() {
   return (
-    <div className="h-screen bg-cover bg-center">
+    <div className="min-h-screen bg-black text-white overflow-hidden">
       <Header />
-      {/* Main Content */}
-      <main className="flex justify-center items-center h-[calc(100vh-80px)] px-4 sm:px-6 lg:px-8">
+
+      {/* Hero Section */}
+      <main className="pt-30 flex justify-center items-center min-h-[calc(100vh-80px)] px-4 sm:px-6 lg:px-8">
         <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 max-w-2xl w-full text-center space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 text-transparent bg-clip-text drop-shadow-lg">
             Transform Your Ideas into Stunning Images
           </h1>
-
           <p className="text-white/90 text-base sm:text-lg md:text-xl">
             With <span className="font-semibold">Bimalxgenerate</span>, turn your imagination into AI-powered artwork. Perfect for content creators, designers, marketers, and dreamers.
           </p>
 
-          <div className="w-full space-y-4 ">
+          <div className="w-full space-y-4">
             <Link href={"/protected"}>
               <button className="mb-5 cursor-pointer w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white font-semibold py-3 sm:py-4 rounded-xl text-lg hover:scale-105 transition-transform">
                 Dashboard
@@ -65,7 +80,7 @@ export default function LandingPage() {
         </div>
       </main>
 
-      {/* Section fot adding the desc */}
+      {/* How It Works Section */}
       <section className="bg-black py-12 sm:py-16 md:py-20 text-white text-center">
         <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-300 text-transparent bg-clip-text">
           How It Works
@@ -75,50 +90,53 @@ export default function LandingPage() {
         </p>
       </section>
 
+      {/* FAQ Section */}
       <section className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-10 max-w-2xl w-full mx-auto text-center space-y-6 mt-10">
-  <h2 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 text-transparent bg-clip-text drop-shadow-lg">
-    Frequently Asked Questions
-  </h2>
+        <h2 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 text-transparent bg-clip-text drop-shadow-lg">
+          Frequently Asked Questions
+        </h2>
 
-  <div className="space-y-4">
-    <div className="bg-black/30 p-4 rounded-lg">
-      <h3 className="text-xl sm:text-2xl text-white font-semibold">
-        How do I use the Text-to-Image Generator?
-      </h3>
-      <p className="text-white/90 text-lg sm:text-xl">
-Login paxi img create garne and malai donate hanni esewa 9814479922      </p>
-    </div>
+        <div className="space-y-4">
+          <div className="bg-black/30 p-4 rounded-lg">
+            <h3 className="text-xl sm:text-2xl text-white font-semibold">
+              How do I use the Text-to-Image Generator?
+            </h3>
+            <p className="text-white/90 text-lg sm:text-xl">
+              Login paxi img create garne and malai donate hanni esewa 9814479922
+            </p>
+          </div>
 
-    <div className="bg-black/30 p-4 rounded-lg">
-      <h3 className="text-xl sm:text-2xl text-white font-semibold">
-        Is there a limit to how many images I can generate?
-      </h3>
-      <p className="text-white/90 text-lg sm:text-xl">
-      I am getting in free so why bother
-      </p>
-    </div>
+          <div className="bg-black/30 p-4 rounded-lg">
+            <h3 className="text-xl sm:text-2xl text-white font-semibold">
+              Is there a limit to how many images I can generate?
+            </h3>
+            <p className="text-white/90 text-lg sm:text-xl">
+              I am getting in free so why bother
+            </p>
+          </div>
 
-    <div className="bg-black/30 p-4 rounded-lg">
-      <h3 className="text-xl sm:text-2xl text-white font-semibold">
-        Can I share my generated images?
-      </h3>
-      <p className="text-white/90 text-lg sm:text-xl">
-no not directly i can give link and you can copy      </p>
-    </div>
+          <div className="bg-black/30 p-4 rounded-lg">
+            <h3 className="text-xl sm:text-2xl text-white font-semibold">
+              Can I share my generated images?
+            </h3>
+            <p className="text-white/90 text-lg sm:text-xl">
+              no not directly i can give link and you can copy
+            </p>
+          </div>
 
-    <div className="bg-black/30 p-4 rounded-lg">
-      <h3 className="text-xl sm:text-2xl text-white font-semibold">
-        What is the cost of using the tool?
-      </h3>
-      <p className="text-white/90 text-lg sm:text-xl">
-Nothing      </p>
-    </div>
-  </div>
-</section>
+          <div className="bg-black/30 p-4 rounded-lg">
+            <h3 className="text-xl sm:text-2xl text-white font-semibold">
+              What is the cost of using the tool?
+            </h3>
+            <p className="text-white/90 text-lg sm:text-xl">
+              Nothing
+            </p>
+          </div>
+        </div>
+      </section>
 
-
-      {/* Footer Section */}
-      <footer className="bg-black py-6 text-white text-center">
+      {/* Footer */}
+      <footer className="bg-black py-6 text-white text-center mt-10">
         <p>© 2025 Bimalxgenerate. All Rights Reserved.</p>
       </footer>
     </div>
