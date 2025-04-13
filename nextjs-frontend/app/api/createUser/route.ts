@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    // Parse the incoming JSON body
+    // Parse json form the protected page
     const { email, fullName } = await request.json();
     console.log('Received email:', email);
     console.log('Received fullName:', fullName);
@@ -28,6 +28,9 @@ export async function POST(request: Request) {
     console.error('Error creating user:', error);
 
     // Provide more detailed error response
+
+    //Linitng issue so solved while prod
+
     // @ts-expect-error - component type is not inferred correctly
     return NextResponse.json({ error: 'Failed to create user', details: error.message  }, { status: 500 });
   }

@@ -18,6 +18,10 @@ export const metadata: Metadata = {
   description: 'Your App Description',
 };
 
+
+//toastprovider for the notifications
+//authwrappr for the clerk file based auth
+// client layout for handling node specific packages
 export default function RootLayout({
   children,
 }: {

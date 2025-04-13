@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   if (!dbUser) {
     return new NextResponse(JSON.stringify({ error: "User not found in database" }), { status: 404 });
   }
-
+// generate using connection with userid
   const imageGenerated = await prisma.imageGenerated.create({
     data: {
       prompt,
