@@ -11,7 +11,6 @@ __pycache__/
 *.db
 *.sqlite3
 *.log
-.env
 
 # Ignore all node_modules folders in any directory
 **/node_modules/
@@ -22,10 +21,6 @@ out/
 dist/
 
 # Next.js environment variables
-.env.local
-.env.development
-.env.production
-.env.test
 
 # Logs
 npm-debug.log*
@@ -41,3 +36,4 @@ vercel-debug.log*
 
 #Mac related Ignores
 .DS_Store
+config.bat
